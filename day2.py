@@ -6,11 +6,11 @@ intcodeprog = [1,1,1,4,99,5,6,0,99]
 
 def compumagic(intprogram):
     #intprogram2 = [x for x in intprogram[::4]]
-    for opcode in intprogram:
+    for index, opcode in enumerate(intprogram):
         if opcode in (1, 2):
-            inputindex1 = intprogram[(intprogram.index(opcode)) + 1]
-            inputindex2 = intprogram[(intprogram.index(opcode)) + 2]
-            outputindex = intprogram[(intprogram.index(opcode)) + 3]
+            inputindex1 = intprogram[(index) + 1]
+            inputindex2 = intprogram[(index) + 2]
+            outputindex = intprogram[(index) + 3]
             if opcode == 1:
                 intprogram[outputindex] = intprogram[inputindex1] + intprogram[inputindex2]
             else:
