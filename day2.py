@@ -31,11 +31,8 @@ def compumagic(intprogram):
                         if intprogram[0] == solution:
                             start = False
                             print(f'the noun is {noun}, the verb is {verb}')
-                            
+                            break
                         else:
                             start = False
-                            
-                    
-                    
 
 compumagic(intcodeprog)
