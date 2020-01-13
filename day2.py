@@ -1,4 +1,5 @@
 import copy
+from operator import add, mul
 
 # 1 = +, 2 = *, 99 = exit
 
@@ -11,7 +12,7 @@ def compumagic(intprogram):
     for noun in range(100):
         for verb in range(100):
                 pointer = 0
-                intprogram = copy.deepcopy(intcodeprog)
+                intprogram = copy.copy(intcodeprog)
                 intprogram[1] = noun
                 intprogram[2] = verb
 
@@ -21,14 +22,9 @@ def compumagic(intprogram):
                         inputindex1 = intprogram[pointer + 1]
                         inputindex2 = intprogram[pointer + 2]
                         outputindex = intprogram[pointer + 3]
-                        if intprogram[pointer] == 1:
-                            intprogram[outputindex] = intprogram[inputindex1] + \
-                                intprogram[inputindex2]
-                            pointer += 4
-                        else:
-                            intprogram[outputindex] = intprogram[inputindex1] * \
-                                intprogram[inputindex2]
-                            pointer += 4
+                        f = add if intprogram[pointer] == 1 else mul
+                        intprogram[outputindex] = f(intprogram[inputindex1], intprogram[inputindex2])
+                        pointer += 4
                 else:
                     if intprogram[0] == solution:
                         print(f'the noun is {noun}, the verb is {verb}')
