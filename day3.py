@@ -1,44 +1,57 @@
-example = ['R75','D30','R83','U83','L12','D49','R71','U7','L72']
-example2 = ['U62','R66','U55','R34','D71','R55','D58','R83']
+# example = ['R75','D30','R83','U83','L12','D49','R71','U7','L72']
+# example2 = ['U62','R66','U55','R34','D71','R55','D58','R83']
 
+example = ['R8', 'U5', 'L5', 'D3']
+example2 = ['U7', 'R6', 'D4', 'L4']
 
-def wiretracer(listofdirections1, listofdirections2):
+class untangle:
+
+    pointerlevel = 10
+    pointerrow = 10
     matrix = {}
-    
-    for level in range(2000): 
-            matrix[level] = ['.'] * 2000
-    # print(matrix)
 
-    #start at 0,0
-    start = True
-    pointerrow = 1000
-    pointerlevel = 1000
-    while start:
+    def drawadirection(self, adirection):
+            if adirection[0] == 'R':
+                distance = int(adirection[1:3])
+                for x in range(distance):
+                    untangle.pointerrow += 1
+                    untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '-'
+            elif adirection[0] == 'L':
+                distance = int(adirection[1:3])
+                for x in range(distance):
+                    untangle.pointerrow -= 1
+                    untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '-'
+            elif adirection[0] == 'U':
+                distance = int(adirection[1:3])
+                for x in range(distance):
+                    untangle.pointerlevel -= 1
+                    untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '|'
+            elif adirection[0] == 'D':
+                distance = int(adirection[1:3])
+                for x in range(distance):
+                    untangle.pointerlevel += 1
+                    untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '|'
+
+    def wiretracer(self, listofdirections1, listofdirections2):
+        
+        
+        for level in range(20): 
+                untangle.matrix[level] = ['.'] * 20
+        # print(matrix)
+
+        #start at 1000,1000
+
         for direction in listofdirections1:
-            if direction[0] == 'R':
-                distance = int(direction[1:3])
-                for x in range(distance):
-                    pointerrow += 1
-                    matrix[pointerlevel][pointerrow] = '-'
-            elif direction[0] == 'L':
-                distance = int(direction[1:3])
-                for x in range(distance):
-                    pointerrow -= 1
-                    matrix[pointerlevel][pointerrow] = '-'
-            elif direction[0] == 'U':
-                distance = int(direction[1:3])
-                for x in range(distance):
-                    pointerlevel -= 1
-                    matrix[pointerlevel][pointerrow] = '|'
-            elif direction[0] == 'D':
-                distance = int(direction[1:3])
-                for x in range(distance):
-                    pointerlevel += 1
-                    matrix[pointerlevel][pointerrow] = '|'
-            else:
-                print(f'done wire')
-                start = False
+            self.drawadirection(direction)
+        untangle.pointerrow = 10
+        untangle.pointerlevel = 10
+        for direction in listofdirections2:
+            self.drawadirection(direction)
 
 
 
-wiretracer(example, example2)
+        for line in list(untangle.matrix.values()):
+                print(line)
+
+
+untangle().wiretracer(example, example2)
