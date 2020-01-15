@@ -9,6 +9,9 @@ class untangle:
     pointerlevel = 10
     pointerrow = 10
     matrix = {}
+    for level in range(20): 
+        matrix[level] = ['.'] * 20
+
 
     def drawadirection(self, adirection):
             if adirection[0] == 'R':
@@ -32,14 +35,9 @@ class untangle:
                     untangle.pointerlevel += 1
                     untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '|'
 
-    def wiretracer(self, listofdirections1, listofdirections2):
-        
-        
-        for level in range(20): 
-                untangle.matrix[level] = ['.'] * 20
-        # print(matrix)
 
-        #start at 1000,1000
+    def wiretracer(self, listofdirections1, listofdirections2):
+        #start at 1000,1000 make a point
 
         for direction in listofdirections1:
             self.drawadirection(direction)
@@ -50,8 +48,18 @@ class untangle:
 
 
 
+        for line in untangle.matrix.values():
+            for index, slot in enumerate(line):
+                try:
+                    if slot == '-' and slot[index + 1] == '|':
+                        if slot[index + 2] == '-':
+                            slot[index + 1] = 'X'
+                except:
+                    continue  
+
+
         for line in list(untangle.matrix.values()):
-                print(line)
+            print(line)
 
 
 untangle().wiretracer(example, example2)
