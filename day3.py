@@ -13,27 +13,31 @@ class untangle:
         matrix[level] = ['.'] * 20
 
 
+
     def drawadirection(self, adirection):
-            if adirection[0] == 'R':
-                distance = int(adirection[1:3])
+        distance = int(adirection[1:3])
+        if adirection[0] in ('R', 'L'):
                 for x in range(distance):
-                    untangle.pointerrow += 1
-                    untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '-'
-            elif adirection[0] == 'L':
-                distance = int(adirection[1:3])
+                    if adirection[0] == 'R':
+                        untangle.pointerrow += 1
+                    else:
+                        untangle.pointerrow -= 1
+                    pointofinsertion = untangle.matrix[untangle.pointerlevel][untangle.pointerrow]
+                    if pointofinsertion == '|':
+                        untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = 'X'
+                    else:
+                        untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '-'
+        elif adirection[0] in ('U', 'D'):
                 for x in range(distance):
-                    untangle.pointerrow -= 1
-                    untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '-'
-            elif adirection[0] == 'U':
-                distance = int(adirection[1:3])
-                for x in range(distance):
-                    untangle.pointerlevel -= 1
-                    untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '|'
-            elif adirection[0] == 'D':
-                distance = int(adirection[1:3])
-                for x in range(distance):
-                    untangle.pointerlevel += 1
-                    untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '|'
+                    if adirection[0] == 'U':
+                        untangle.pointerrow -= 1
+                    else:
+                        untangle.pointerrow += 1
+                    pointofinsertion = untangle.matrix[untangle.pointerlevel][untangle.pointerrow]
+                    if pointofinsertion == '-':
+                        untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = 'X'
+                    else:
+                        untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '|'
 
 
     def wiretracer(self, listofdirections1, listofdirections2):
@@ -48,15 +52,14 @@ class untangle:
 
 
 
-        for line in untangle.matrix.values():
-            for index, slot in enumerate(line):
-                try:
-                    if slot == '-' and slot[index + 1] == '|':
-                        if slot[index + 2] == '-':
-                            slot[index + 1] = 'X'
-                except:
-                    continue  
-
+        # for line in untangle.matrix.values():
+            # for index, slot in enumerate(line):
+                # 
+                # if slot == '-' and line[index + 1] == '|':
+                    # if line[index + 2] == '-':
+                        # line[index + 1] = 'X'
+                # 
+                
 
         for line in list(untangle.matrix.values()):
             print(line)
