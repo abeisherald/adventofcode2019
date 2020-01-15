@@ -12,33 +12,6 @@ class untangle:
     for level in range(20): 
         matrix[level] = ['.'] * 20
 
-
-    def linedrawer(ddirection):
-        distance = int(ddirection[1:3])
-        if ddirection[0] in ('R', 'L'):
-                for x in range(distance):
-                    if ddirection[0] == 'R':
-                        untangle.pointerrow += 1
-                    else:
-                        untangle.pointerrow -= 1
-                    pointofinsertion = untangle.matrix[untangle.pointerlevel][untangle.pointerrow]
-                    if pointofinsertion == '|':
-                        pointofinsertion = 'X'
-                    else:
-                        pointofinsertion = '-'
-        elif ddirection[0] in ('U', 'D'):
-                for x in range(distance):
-                    if ddirection[0] == 'U':
-                        untangle.pointerrow -= 1
-                    else:
-                        untangle.pointerrow += 1
-                    pointofinsertion = untangle.matrix[untangle.pointerlevel][untangle.pointerrow]
-                    if pointofinsertion == '-':
-                        pointofinsertion = 'X'
-                    else:
-                        pointofinsertion = '|'
-
-
     def drawadirection(self, adirection):
             if adirection[0] == 'R':
                 distance = int(adirection[1:3])
@@ -74,6 +47,11 @@ class untangle:
                         untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '|'
 
 
+    def findclosestx(self):
+        #find x and measure its index vs index of start
+        pass
+
+    
     def wiretracer(self, listofdirections1, listofdirections2):
         #start at 1000,1000 make a point
 
@@ -83,16 +61,6 @@ class untangle:
         untangle.pointerlevel = 10
         for direction in listofdirections2:
             self.drawadirection(direction)
-
-
-
-        # for line in untangle.matrix.values():
-            # for index, slot in enumerate(line):
-                # 
-                # if slot == '-' and line[index + 1] == '|':
-                    # if line[index + 2] == '-':
-                        # line[index + 1] = 'X'
-                # 
                 
 
         for line in list(untangle.matrix.values()):
