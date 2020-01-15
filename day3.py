@@ -13,28 +13,62 @@ class untangle:
         matrix[level] = ['.'] * 20
 
 
-
-    def drawadirection(self, adirection):
-        distance = int(adirection[1:3])
-        if adirection[0] in ('R', 'L'):
+    def linedrawer(ddirection):
+        distance = int(ddirection[1:3])
+        if ddirection[0] in ('R', 'L'):
                 for x in range(distance):
-                    if adirection[0] == 'R':
+                    if ddirection[0] == 'R':
                         untangle.pointerrow += 1
                     else:
                         untangle.pointerrow -= 1
                     pointofinsertion = untangle.matrix[untangle.pointerlevel][untangle.pointerrow]
                     if pointofinsertion == '|':
-                        untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = 'X'
+                        pointofinsertion = 'X'
                     else:
-                        untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '-'
-        elif adirection[0] in ('U', 'D'):
+                        pointofinsertion = '-'
+        elif ddirection[0] in ('U', 'D'):
                 for x in range(distance):
-                    if adirection[0] == 'U':
+                    if ddirection[0] == 'U':
                         untangle.pointerrow -= 1
                     else:
                         untangle.pointerrow += 1
                     pointofinsertion = untangle.matrix[untangle.pointerlevel][untangle.pointerrow]
                     if pointofinsertion == '-':
+                        pointofinsertion = 'X'
+                    else:
+                        pointofinsertion = '|'
+
+
+    def drawadirection(self, adirection):
+            if adirection[0] == 'R':
+                distance = int(adirection[1:3])
+                for x in range(distance):
+                    untangle.pointerrow += 1
+                    if untangle.matrix[untangle.pointerlevel][untangle.pointerrow] == '|':
+                        untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = 'X'
+                    else:
+                        untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '-'
+            elif adirection[0] == 'L':
+                distance = int(adirection[1:3])
+                for x in range(distance):
+                    untangle.pointerrow -= 1
+                    if untangle.matrix[untangle.pointerlevel][untangle.pointerrow] == '|':
+                        untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = 'X'
+                    else:
+                        untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '-'
+            elif adirection[0] == 'U':
+                distance = int(adirection[1:3])
+                for x in range(distance):
+                    untangle.pointerlevel -= 1
+                    if untangle.matrix[untangle.pointerlevel][untangle.pointerrow] == '-':
+                        untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = 'X'
+                    else:
+                        untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '|'
+            elif adirection[0] == 'D':
+                distance = int(adirection[1:3])
+                for x in range(distance):
+                    untangle.pointerlevel += 1
+                    if untangle.matrix[untangle.pointerlevel][untangle.pointerrow] == '-':
                         untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = 'X'
                     else:
                         untangle.matrix[untangle.pointerlevel][untangle.pointerrow] = '|'
