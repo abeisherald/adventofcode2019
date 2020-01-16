@@ -12,58 +12,95 @@ line2 = ['U98','R91','D20','R16','D67','R40','U7','R15', 'U6', 'R7']
 
 class untangle:
 
-    start = 500
+    start = 5000
     pointerlevel = copy.copy(start)
     pointercolumn = copy.copy(start)
     matrix = {}
     pointerstart = False
 
-    for level in range(1000): 
-        matrix[level] = ['.'] * 1000
+    for level in range(10000): 
+        matrix[level] = ['.'] * 10000
 
     while not pointerstart:
         matrix[pointerlevel][pointercolumn] = 'O'
         pointerstart = True
 
 
-    def drawadirection(self, adirection):
-        if adirection[0] == 'R':
-            distance = int(adirection[1:])
-            for _ in range(distance):
-                untangle.pointercolumn += 1
-                slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
-                if slot == '|':
-                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]= 'X'
-                else:
-                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]= '-'
-        elif adirection[0] == 'L':
-            distance = int(adirection[1:])
-            for _ in range(distance):
-                untangle.pointercolumn -= 1
-                slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
-                if slot == '|':
-                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
-                else:
-                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '-'
-        elif adirection[0] == 'U':
-            distance = int(adirection[1:])
-            for _ in range(distance):
-                untangle.pointerlevel -= 1
-                slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
-                if slot == '-':
-                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
-                else:
-                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '|'
-        elif adirection[0] == 'D':
-            distance = int(adirection[1:])
-            for _ in range(distance):
-                untangle.pointerlevel += 1
-                slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
-                if slot == '-':
-                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
-                else:
-                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '|'
-
+    def drawadirection(self, direction, which_wire):
+        if which_wire == 1:
+            if direction[0] == 'R':
+                distance = int(direction[1:])
+                for _ in range(distance):
+                    untangle.pointercolumn += 1
+                    slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
+                    if slot == '^':
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]= 'X'
+                    else:
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]= '-'
+            elif direction[0] == 'L':
+                distance = int(direction[1:])
+                for _ in range(distance):
+                    untangle.pointercolumn -= 1
+                    slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
+                    if slot == '^':
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
+                    else:
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '-'
+            elif direction[0] == 'U':
+                distance = int(direction[1:])
+                for _ in range(distance):
+                    untangle.pointerlevel -= 1
+                    slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
+                    if slot == '_':
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
+                    else:
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '|'
+            elif direction[0] == 'D':
+                distance = int(direction[1:])
+                for _ in range(distance):
+                    untangle.pointerlevel += 1
+                    slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
+                    if slot == '_':
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
+                    else:
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '|'
+        else:
+            if direction[0] == 'R':
+                distance = int(direction[1:])
+                for _ in range(distance):
+                    untangle.pointercolumn += 1
+                    slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
+                    if slot == '|':
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]= 'X'
+                    else:
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]= '_'
+            elif direction[0] == 'L':
+                distance = int(direction[1:])
+                for _ in range(distance):
+                    untangle.pointercolumn -= 1
+                    slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
+                    if slot == '|':
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
+                    else:
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '_'
+            elif direction[0] == 'U':
+                distance = int(direction[1:])
+                for _ in range(distance):
+                    untangle.pointerlevel -= 1
+                    slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
+                    if slot == '-':
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
+                    else:
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '^'
+            elif direction[0] == 'D':
+                distance = int(direction[1:])
+                for _ in range(distance):
+                    untangle.pointerlevel += 1
+                    slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
+                    if slot == '-':
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
+                    else:
+                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '^'
 
     def findclosestx(self):
         start = untangle.start
@@ -79,12 +116,12 @@ class untangle:
 
     
     def wiretracer(self):
-        with open("day3input.txt") as directionfile:
-            for _ in range(2):
+        with open("day3input1.txt") as directionfile:
+            for wire in range(1, 3):
                 lineofdirections = directionfile.readline()
                 lineofdirections = lineofdirections.split(',')
                 for direction in lineofdirections:
-                    self.drawadirection(direction)
+                    self.drawadirection(direction, wire)
                 # resetting the pointer to starting location
                 untangle.pointercolumn = copy.copy(untangle.start)
                 untangle.pointerlevel = copy.copy(untangle.start)
