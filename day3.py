@@ -5,21 +5,20 @@ from operator import add, sub
 
 class untangle:
 
-    start = 5000
+    start = 0
     pointerlevel = start
     pointercolumn = start
     matrix = collections.defaultdict(lambda: collections.defaultdict(lambda: '.'))
     matrix[pointerlevel][pointercolumn] = 'O'
    
 
-    def drawadirection(self, direction, which_wire):
+    def draw_a_direction(self, direction, which_wire):
         x = '-' if which_wire == 2 else '_'
         x2 = '|' if which_wire == 2 else '^'
         x3 = add if direction[0] in ('R', 'D') else sub
         x5 = '_' if which_wire == 2 else '-'
         x6 = '^' if which_wire == 2 else '|'
         distance = int(direction[1:])
-
 
         for _ in range(distance):
             if direction[0] in ('R', 'L'):
@@ -32,30 +31,29 @@ class untangle:
                 untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X' if slot == x else x6
             
 
-    def findclosestx(self):
-        start = untangle.start
-        currentshortestdistance = math.inf
+    def find_closest_x(self):
+        current_shortest_distance = math.inf
 
-        for indexofline, line in untangle.matrix.items():
-            for indexofslot, slot in line.items(): 
+        for index_of_line, line in untangle.matrix.items():
+            for index_of_slot, slot in line.items(): 
                 if slot == 'X':
-                    manhattandistance = (abs(indexofslot - start)) + (abs(indexofline - start))
-                    if manhattandistance < currentshortestdistance:
-                        currentshortestdistance = manhattandistance
-        print(currentshortestdistance)
+                    manhattan_distance = (abs(index_of_slot)) + (abs(index_of_line))
+                    if manhattan_distance < current_shortest_distance:
+                        current_shortest_distance = manhattan_distance
+        print(current_shortest_distance)
 
     
     def wiretracer(self):
         with open("day3input1.txt") as directionfile:
             for wire in range(1, 3):
-                lineofdirections = directionfile.readline()
-                lineofdirections = lineofdirections.split(',')
-                for direction in lineofdirections:
-                    self.drawadirection(direction, wire)
+                line_of_directions = directionfile.readline()
+                line_of_directions = line_of_directions.split(',')
+                for direction in line_of_directions:
+                    self.draw_a_direction(direction, wire)
                 # resetting the pointer to starting location
                 untangle.pointercolumn = untangle.start
                 untangle.pointerlevel = untangle.start
-        self.findclosestx()
+        self.find_closest_x()
 
 
 untangle().wiretracer()
