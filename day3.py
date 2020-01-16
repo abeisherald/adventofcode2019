@@ -6,29 +6,29 @@ from operator import add, sub
 class untangle:
 
     start = 0
-    pointerlevel = start
+    pointerrow = start
     pointercolumn = start
     matrix = collections.defaultdict(lambda: collections.defaultdict(lambda: '.'))
-    matrix[pointerlevel][pointercolumn] = 'O'
+    matrix[pointerrow][pointercolumn] = 'O'
    
 
     def draw_a_direction(self, direction, which_wire):
-        x = '-' if which_wire == 2 else '_'
-        x2 = '|' if which_wire == 2 else '^'
-        x3 = add if direction[0] in ('R', 'D') else sub
-        x5 = '_' if which_wire == 2 else '-'
-        x6 = '^' if which_wire == 2 else '|'
+        horizontal = '-' if which_wire == 2 else '_'
+        vertical = '|' if which_wire == 2 else '^'
+        maths = add if direction[0] in ('R', 'D') else sub
+        horizontal2 = '_' if which_wire == 2 else '-'
+        vertical2 = '^' if which_wire == 2 else '|'
         distance = int(direction[1:])
 
         for _ in range(distance):
             if direction[0] in ('R', 'L'):
-                untangle.pointercolumn = x3(untangle.pointercolumn, 1)
-                slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
-                untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X' if slot == x2 else x5
+                untangle.pointercolumn = maths(untangle.pointercolumn, 1)
+                slot = untangle.matrix[untangle.pointerrow][untangle.pointercolumn]
+                untangle.matrix[untangle.pointerrow][untangle.pointercolumn] = 'X' if slot == vertical else horizontal2
             else:
-                untangle.pointerlevel = x3(untangle.pointerlevel, 1)
-                slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
-                untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X' if slot == x else x6
+                untangle.pointerrow = maths(untangle.pointerrow, 1)
+                slot = untangle.matrix[untangle.pointerrow][untangle.pointercolumn]
+                untangle.matrix[untangle.pointerrow][untangle.pointercolumn] = 'X' if slot == horizontal else vertical2
             
 
     def find_closest_x(self):
@@ -52,7 +52,7 @@ class untangle:
                     self.draw_a_direction(direction, wire)
                 # resetting the pointer to starting location
                 untangle.pointercolumn = untangle.start
-                untangle.pointerlevel = untangle.start
+                untangle.pointerrow = untangle.start
         self.find_closest_x()
 
 
