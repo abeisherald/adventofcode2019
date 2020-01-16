@@ -1,4 +1,6 @@
 import copy
+import math
+import collections
 
 line1 = ['R98','U47','R26','D63','R33','U87','L62','D20','R33', 'U53', 'R51']
 line2 = ['U98','R91','D20','R16','D67','R40','U7','R15', 'U6', 'R7']
@@ -13,21 +15,15 @@ line2 = ['U98','R91','D20','R16','D67','R40','U7','R15', 'U6', 'R7']
 class untangle:
 
     start = 5000
-    pointerlevel = copy.copy(start)
-    pointercolumn = copy.copy(start)
-    matrix = {}
-    pointerstart = False
-
-    for level in range(10000): 
-        matrix[level] = ['.'] * 10000
-
-    while not pointerstart:
-        matrix[pointerlevel][pointercolumn] = 'O'
-        pointerstart = True
-
+    pointerlevel = start
+    pointercolumn = start
+    matrix = collections.defaultdict(lambda: collections.defaultdict(lambda: '.'))
+    matrix[pointerlevel][pointercolumn] = 'O'
+   
 
     def drawadirection(self, direction, which_wire):
         if which_wire == 1:
+
             if direction[0] == 'R':
                 distance = int(direction[1:])
                 for _ in range(distance):
@@ -104,10 +100,10 @@ class untangle:
 
     def findclosestx(self):
         start = untangle.start
-        currentshortestdistance = 1000
+        currentshortestdistance = math.inf
 
-        for indexofline, line in enumerate(untangle.matrix.values()):
-            for indexofslot, slot in enumerate(line): 
+        for indexofline, line in untangle.matrix.items():
+            for indexofslot, slot in line.items(): 
                 if slot == 'X':
                     manhattandistance = (abs(indexofslot - start)) + (abs(indexofline - start))
                     if manhattandistance < currentshortestdistance:
