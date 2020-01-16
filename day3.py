@@ -27,38 +27,38 @@ class untangle:
 
 
     def drawadirection(self, adirection):
-            if adirection[0] == 'R':
-                distance = int(adirection[1:])
-                for x in range(distance):
-                    untangle.pointercolumn += 1
-                    if untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] == '|':
-                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
-                    else:
-                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '-'
-            elif adirection[0] == 'L':
-                distance = int(adirection[1:])
-                for x in range(distance):
-                    untangle.pointercolumn -= 1
-                    if untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] == '|':
-                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
-                    else:
-                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '-'
-            elif adirection[0] == 'U':
-                distance = int(adirection[1:])
-                for x in range(distance):
-                    untangle.pointerlevel -= 1
-                    if untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] == '-':
-                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
-                    else:
-                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '|'
-            elif adirection[0] == 'D':
-                distance = int(adirection[1:])
-                for x in range(distance):
-                    untangle.pointerlevel += 1
-                    if untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] == '-':
-                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
-                    else:
-                        untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '|'
+        if adirection[0] == 'R':
+            distance = int(adirection[1:])
+            for x in range(distance):
+                untangle.pointercolumn += 1
+                if untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] == '|':
+                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
+                else:
+                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '-'
+        elif adirection[0] == 'L':
+            distance = int(adirection[1:])
+            for x in range(distance):
+                untangle.pointercolumn -= 1
+                if untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] == '|':
+                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
+                else:
+                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '-'
+        elif adirection[0] == 'U':
+            distance = int(adirection[1:])
+            for x in range(distance):
+                untangle.pointerlevel -= 1
+                if untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] == '-':
+                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
+                else:
+                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '|'
+        elif adirection[0] == 'D':
+            distance = int(adirection[1:])
+            for x in range(distance):
+                untangle.pointerlevel += 1
+                if untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] == '-':
+                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = 'X'
+                else:
+                    untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '|'
 
 
     def findclosestx(self):
@@ -82,10 +82,7 @@ class untangle:
             untangle.pointerlevel = copy.copy(untangle.start)
             for direction in lineofdirections:
                 self.drawadirection(direction)
-        # untangle.pointercolumn = copy.copy(untangle.start)
-        # untangle.pointerlevel = copy.copy(untangle.start)
-        # for direction in listofdirections2:
-        #     self.drawadirection(direction)
+
         self.findclosestx()
 
 
