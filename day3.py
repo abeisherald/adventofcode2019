@@ -29,7 +29,7 @@ class untangle:
     def drawadirection(self, adirection):
         if adirection[0] == 'R':
             distance = int(adirection[1:])
-            for x in range(distance):
+            for _ in range(distance):
                 untangle.pointercolumn += 1
                 slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
                 if slot == '|':
@@ -38,7 +38,7 @@ class untangle:
                     untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]= '-'
         elif adirection[0] == 'L':
             distance = int(adirection[1:])
-            for x in range(distance):
+            for _ in range(distance):
                 untangle.pointercolumn -= 1
                 slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
                 if slot == '|':
@@ -47,7 +47,7 @@ class untangle:
                     untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '-'
         elif adirection[0] == 'U':
             distance = int(adirection[1:])
-            for x in range(distance):
+            for _ in range(distance):
                 untangle.pointerlevel -= 1
                 slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
                 if slot == '-':
@@ -56,7 +56,7 @@ class untangle:
                     untangle.matrix[untangle.pointerlevel][untangle.pointercolumn] = '|'
         elif adirection[0] == 'D':
             distance = int(adirection[1:])
-            for x in range(distance):
+            for _ in range(distance):
                 untangle.pointerlevel += 1
                 slot = untangle.matrix[untangle.pointerlevel][untangle.pointercolumn]
                 if slot == '-':
@@ -80,7 +80,7 @@ class untangle:
     
     def wiretracer(self):
         with open("day3input.txt") as directionfile:
-            for x in range(2):
+            for _ in range(2):
                 lineofdirections = directionfile.readline()
                 lineofdirections = lineofdirections.split(',')
                 for direction in lineofdirections:
