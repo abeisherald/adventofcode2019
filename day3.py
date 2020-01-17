@@ -8,10 +8,10 @@ class untangle:
 
     start = 0
     x_counter = 0
-    pointerrow_wire_1 = start
-    pointercolumn_wire_1 = start
+    pointerrow = start
+    pointercolumn = start
     matrix = collections.defaultdict(lambda: collections.defaultdict(lambda: '.'))
-    matrix[pointerrow_wire_1][pointercolumn_wire_1] = 'O'
+    matrix[pointerrow][pointercolumn] = 'O'
    
 
     def draw_a_direction(self, direction, which_wire):
@@ -24,13 +24,13 @@ class untangle:
 
         for _ in range(distance):
             if direction[0] in ('R', 'L'):
-                untangle.pointercolumn_wire_1 = maths(untangle.pointercolumn_wire_1, 1)
-                slot = untangle.matrix[untangle.pointerrow_wire_1][untangle.pointercolumn_wire_1]
-                untangle.matrix[untangle.pointerrow_wire_1][untangle.pointercolumn_wire_1] = 'X' if slot == vertical else horizontal2
+                untangle.pointercolumn = maths(untangle.pointercolumn, 1)
+                slot = untangle.matrix[untangle.pointerrow][untangle.pointercolumn]
+                untangle.matrix[untangle.pointerrow][untangle.pointercolumn] = 'X' if slot == vertical else horizontal2
             else:
-                untangle.pointerrow_wire_1 = maths(untangle.pointerrow_wire_1, 1)
-                slot = untangle.matrix[untangle.pointerrow_wire_1][untangle.pointercolumn_wire_1]
-                untangle.matrix[untangle.pointerrow_wire_1][untangle.pointercolumn_wire_1] = 'X' if slot == horizontal else vertical2
+                untangle.pointerrow = maths(untangle.pointerrow, 1)
+                slot = untangle.matrix[untangle.pointerrow][untangle.pointercolumn]
+                untangle.matrix[untangle.pointerrow][untangle.pointercolumn] = 'X' if slot == horizontal else vertical2
             
 
     def find_closest_x(self):
@@ -151,8 +151,8 @@ class untangle:
                 for direction in line_of_directions:
                     self.draw_a_direction(direction, wire)
                 # resetting the pointer to starting location
-                untangle.pointercolumn_wire_1 = untangle.start
-                untangle.pointerrow_wire_1 = untangle.start
+                untangle.pointercolumn = untangle.start
+                untangle.pointerrow = untangle.start
         self.find_closest_x()
         self.find_shortest_x_distance()
 
