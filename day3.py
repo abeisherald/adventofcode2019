@@ -47,96 +47,83 @@ class untangle:
 
     
     def find_shortest_x_distance(self):
-        pointerrow_wire_1 = 0
-        pointercolumn_wire_1 = 0
-        pointerrow_wire_2 = 0
-        pointercolumn_wire_2 = 0
-        current_shortest_distance_to_x = math.inf
-        matrix = copy.copy(untangle.matrix)
+
+        wire_is_incomplete = True
         x_counter = untangle.x_counter
-        distance_counter_wire_1 = 0
-        distance_counter_wire_2 = 0
-        
-        while x_counter > 0:
-            for wire in range(2):
-                while wire == 0:
-                    if matrix[pointerrow_wire_1][pointercolumn_wire_1 + 1] == '-':
-                        distance_counter_wire_1 += 1
-                        pointercolumn_wire_1 += 1
-                        matrix[pointerrow_wire_1][pointercolumn_wire_1] = '.'
-                    elif matrix[pointerrow_wire_1][pointercolumn_wire_1 - 1] == '-':
-                        distance_counter_wire_1 += 1
-                        pointercolumn_wire_1 -= 1
-                        matrix[pointerrow_wire_1][pointercolumn_wire_1] = '.'
-                    elif matrix[pointerrow_wire_1 + 1][pointercolumn_wire_1] == '|':
-                        distance_counter_wire_1 += 1
-                        pointerrow_wire_1 += 1
-                        matrix[pointerrow_wire_1][pointercolumn_wire_1] = '.'
-                    elif matrix[pointerrow_wire_1 - 1][pointercolumn_wire_1] == '|':
-                        distance_counter_wire_1 += 1
-                        pointerrow_wire_1 -= 1
-                        matrix[pointerrow_wire_1][pointercolumn_wire_1] = '.'
-                    elif matrix[pointerrow_wire_1][pointercolumn_wire_1 + 1] == 'X':
-                        distance_counter_wire_1 += 1
-                        x_counter -= 1
-                        matrix[pointerrow_wire_1][pointercolumn_wire_1] = '.'
-                        break
-                    elif matrix[pointerrow_wire_1][pointercolumn_wire_1 - 1] == 'X':
-                        distance_counter_wire_1 += 1
-                        x_counter -= 1
-                        matrix[pointerrow_wire_1][pointercolumn_wire_1] = '.'
-                        break
-                    elif matrix[pointerrow_wire_1 + 1][pointercolumn_wire_1] == 'X':
-                        distance_counter_wire_1 += 1
-                        x_counter -= 1
-                        matrix[pointerrow_wire_1][pointercolumn_wire_1] = '.'
-                        break
-                    elif matrix[pointerrow_wire_1 - 1][pointercolumn_wire_1] == 'X':
-                        distance_counter_wire_1 += 1
-                        x_counter -= 1
-                        matrix[pointerrow_wire_1][pointercolumn_wire_1] = '.'
-                        break
-                    
-                while wire == 1:
-                    if matrix[pointerrow_wire_2][pointercolumn_wire_2 + 1] == '_':
-                        distance_counter_wire_2 += 1
-                        pointercolumn_wire_2 += 1
-                        matrix[pointerrow_wire_2][pointercolumn_wire_2] = '.'
-                    elif matrix[pointerrow_wire_2][pointercolumn_wire_2 - 1] == '_':
-                        distance_counter_wire_2 += 1
-                        pointercolumn_wire_2 -= 1
-                        matrix[pointerrow_wire_2][pointercolumn_wire_2] = '.'
-                    elif matrix[pointerrow_wire_2 + 1][pointercolumn_wire_2] == '^':
-                        distance_counter_wire_2 += 1
-                        pointerrow_wire_2 += 1
-                        matrix[pointerrow_wire_2][pointercolumn_wire_2] = '.'
-                    elif matrix[pointerrow_wire_2 - 1][pointercolumn_wire_2] == '^':
-                        distance_counter_wire_2 += 1
-                        pointerrow_wire_2 -= 1
-                        matrix[pointerrow_wire_2][pointercolumn_wire_2] = '.'
-                    elif matrix[pointerrow_wire_2][pointercolumn_wire_2 + 1] == 'X':
-                        distance_counter_wire_2 += 1
-                        x_counter -= 1
-                        matrix[pointerrow_wire_2][pointercolumn_wire_2] = '.'
-                        break
-                    elif matrix[pointerrow_wire_2][pointercolumn_wire_2 - 1] == 'X':
-                        distance_counter_wire_2 += 1
-                        x_counter -= 1
-                        matrix[pointerrow_wire_2][pointercolumn_wire_2] = '.'
-                        break
-                    elif matrix[pointerrow_wire_2 + 1][pointercolumn_wire_2] == 'X':
-                        distance_counter_wire_2 += 1
-                        x_counter -= 1
-                        matrix[pointerrow_wire_2][pointercolumn_wire_2] = '.'
-                        break
-                    elif matrix[pointerrow_wire_2 - 1][pointercolumn_wire_2] == 'X':
-                        distance_counter_wire_2 += 1
-                        x_counter -= 1
-                        matrix[pointerrow_wire_2][pointercolumn_wire_2] = '.'
-                        break
-                    
+        distance_keeper = {k:[] for k in range(x_counter)}
+        current_shortest_distance_to_x = math.inf
+       
+        for which_wire in range(1, 3):
+            while wire_is_incomplete:
+                horizontal2 = '_' if which_wire == 2 else '-'
+                vertical2 = '^' if which_wire == 2 else '|'
+                pointercolumn_wire_1 = 0
+                pointercolumn_wire_2 = 0
+                pointerrow_wire_1 = 0
+                pointerrow_wire_2 = 0
+                pointerrow = pointerrow_wire_2 if which_wire == 2 else pointerrow_wire_1
+                pointercolumn = pointercolumn_wire_2 if which_wire == 2 else pointercolumn_wire_1
+                distance_counter_wire_1 = 0
+                distance_counter_wire_2 = 0
+                distance_counter = distance_counter_wire_2 if which_wire == 2 else distance_counter_wire_1
+                matrix = copy.copy(untangle.matrix)
+                x_counter = untangle.x_counter
+                right = False
+                left = False
+                up = False
+                down = False
                 
-            distance_to_x = distance_counter_wire_1 + distance_counter_wire_2
+
+                
+                
+                if matrix[pointerrow][pointercolumn + 1] == horizontal2:
+                    right = True
+                elif matrix[pointerrow][pointercolumn - 1] == horizontal2:
+                    right = True
+                elif matrix[pointerrow + 1][pointercolumn] == vertical2:
+                    down = True
+                elif matrix[pointerrow - 1][pointercolumn] == vertical2:
+                    up = True
+                else:
+                    wire_is_incomplete = False
+                    break
+                
+                direction_maths = 1 if right == True or down == True else -1 
+
+                
+                while right or left:
+                    slot = matrix[pointerrow][pointercolumn + direction_maths]
+                    if slot == '.':
+                        right = left = False
+                    elif slot == horizontal2:
+                        pointercolumn += direction_maths
+                        matrix[pointerrow][pointercolumn] = '.'
+                        distance_counter += 1
+                    elif slot[:1] == 'X':
+                        pointercolumn += direction_maths
+                        matrix[pointerrow][pointercolumn] = 'X' + x_counter
+                        distance_counter += 1
+                        distance_keeper[x_counter] = distance_keeper[x_counter].append(distance_counter)
+                        x_counter -= 1
+
+                while up or down:
+                    slot = matrix[pointerrow][pointercolumn + direction_maths]
+                    if slot == False:
+                        up = down = False
+                    elif slot == vertical2:
+                        pointerrow += direction_maths
+                        matrix[pointerrow][pointercolumn] = '.'
+                        distance_counter += 1
+                    elif slot[:1] == 'X':
+                        pointerrow += direction_maths
+                        matrix[pointerrow][pointercolumn] = 'X' + x_counter
+                        distance_counter += 1
+                        distance_keeper[x_counter] = distance_keeper[x_counter].append(distance_counter)
+                        x_counter -= 1
+                        
+                    
+        for x_name, x_distances_from_center in distance_keeper:
+            distance_to_x = x_distances_from_center[0] + x_distances_from_center[1]                
             if distance_to_x < current_shortest_distance_to_x:
                 current_shortest_distance_to_x = distance_to_x
         print(current_shortest_distance_to_x)
@@ -144,7 +131,7 @@ class untangle:
 
 
     def wiretracer(self):
-        with open("day3input1.txt") as directionfile:
+        with open("day3input.txt") as directionfile:
             for wire in range(1, 3):
                 line_of_directions = directionfile.readline()
                 line_of_directions = line_of_directions.split(',')
