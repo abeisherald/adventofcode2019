@@ -13,11 +13,13 @@ def secret_cracker(input_range_start, input_range_end):
         current_digit = 0
         adjacency_counter = 0
         number = list(str(number))
-        number = iter(number)
         saved_number = copy.copy(number)
+
         for digit in number:
-            if digit == next(number):
+            count = number.count(digit)
+            if count == 2:
                 adjacency_counter += 1
+
         if adjacency_counter >= 1:
             for digit in saved_number:
                 digit = int(digit)
