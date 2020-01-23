@@ -1,4 +1,4 @@
-from operator import add, mul
+from operator import add, mul, lt, eq, ne
 
 
 
@@ -7,11 +7,10 @@ from operator import add, mul
 def compumagic():
     pointer = 0
 
-    with open('day5input1.txt') as program:
+    with open('day5input.txt') as program:
         intprogram = program.readline().split(',')
     for index, instruction in enumerate(intprogram):
         intprogram[index] = int(instruction)
-
 
 
     while intprogram[pointer] != 99:
@@ -36,8 +35,8 @@ def compumagic():
 
         
         if opcode in ('1', '2'):
-            f = add if opcode == '1' else mul
-            intprogram[outputindex] = f(parameter_1_mode, parameter_2_mode)
+            operator = add if opcode == '1' else mul
+            intprogram[outputindex] = operator(parameter_1_mode, parameter_2_mode)
             pointer += 4
         elif opcode == '3':
             input_value = int(input(f'Provide a single integer: '))
@@ -49,24 +48,16 @@ def compumagic():
             output = intprogram[opcode_4_output]
             print(f'The output is {output}.')
             pointer += 2
-        elif opcode == '5':
-            pointer = parameter_1_mode_index2 if parameter_1 != '0' else pointer
-            x = 3 if parameter_1 == '0' else 0
+        elif opcode in ('5', '6'):
+            operator = ne if opcode == '5' else eq
+            pointer = parameter_1_mode_index2 if operator(parameter_1, '0') else pointer
+            x = 0 if operator(parameter_1, '0') else 3
             pointer += x
-        elif opcode == '6':
-            pointer = parameter_1_mode_index2 if parameter_1 == '0' else pointer
-            x = 3 if parameter_1 != '0' else 0
-            pointer += x
-        elif opcode == '7':
-            x = 1 if parameter_1_mode < parameter_2_mode else 0
+        elif opcode in ('7', '8'):
+            operator = lt if opcode == '7' else eq
+            x = 1 if operator(parameter_1_mode, parameter_2_mode) else 0
             intprogram[outputindex] = x
             pointer += 4
-        elif opcode == '8':
-            x = 1 if parameter_1_mode == parameter_2_mode else 0
-            intprogram[outputindex] = x
-            pointer += 4
-
-
     else:
         print(f'Program complete')
 
