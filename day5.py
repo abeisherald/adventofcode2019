@@ -14,8 +14,7 @@ def compumagic():
 
 
     while intprogram[pointer] != 99:
-        instruction = intprogram[pointer]
-        instruction = str(instruction)
+        instruction = str(intprogram[pointer])
         while len(instruction) < 5:
             instruction = '0' + instruction
 
@@ -43,8 +42,8 @@ def compumagic():
             intprogram[outputindex] = input_value
             pointer += 2
         elif opcode == '4':
-            opcode_4_output = inputindex1 if parameter_1 == '0' else (pointer + 1)
-            output = intprogram[opcode_4_output]
+            index_for_output = inputindex1 if parameter_1 == '0' else pointer + 1
+            output = intprogram[index_for_output]
             print(f'The output is {output}.')
             pointer += 2
         elif opcode in ('5', '6'):
