@@ -23,15 +23,14 @@ def compumagic():
         parameter_1 = instruction[2:3]
         parameter_2 = instruction[1:2]
         inputindex1 = intprogram[pointer + 1]
-        inputindex2 = intprogram[pointer + 2]
-        outputindex = intprogram[pointer + 3]
+        
         
         # 0=position mode, 1=immediate mode
         if opcode in ('1', '2', '5', '6', '7', '8'):
+            inputindex2 = intprogram[pointer + 2]
+            outputindex = intprogram[pointer + 3]
             parameter_1_mode = intprogram[inputindex1] if parameter_1 == '0' else inputindex1
-            parameter_1_mode_index2 = intprogram[inputindex2] if parameter_1 == '0' else inputindex2
             parameter_2_mode = intprogram[inputindex2] if parameter_2 == '0' else inputindex2
-            parameter_2_mode_index1 = intprogram[inputindex1] if parameter_2 == '0' else inputindex1
 
         
         if opcode in ('1', '2'):
@@ -44,14 +43,14 @@ def compumagic():
             intprogram[outputindex] = input_value
             pointer += 2
         elif opcode == '4':
-            opcode_4_output = intprogram[pointer + 1] if parameter_1 == '0' else (pointer + 1)
+            opcode_4_output = inputindex1 if parameter_1 == '0' else (pointer + 1)
             output = intprogram[opcode_4_output]
             print(f'The output is {output}.')
             pointer += 2
         elif opcode in ('5', '6'):
             operator = ne if opcode == '5' else eq
-            pointer = parameter_1_mode_index2 if operator(parameter_1, '0') else pointer
-            x = 0 if operator(parameter_1, '0') else 3
+            pointer = parameter_2_mode if operator(parameter_1_mode, 0) else pointer
+            x = 0 if operator(parameter_1_mode, 0) else 3
             pointer += x
         elif opcode in ('7', '8'):
             operator = lt if opcode == '7' else eq
