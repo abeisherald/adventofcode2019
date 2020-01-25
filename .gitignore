@@ -1,2 +1,8 @@
+/Rust/day2/target/
+/Rust/day2/Cargo.lock
+/Rust/day2/Cargo.toml
+/Rust/day5/target/
+/Rust/day5/Cargo.lock
+/Rust/day5/Cargo.toml
 day2part1input.txt
 .vscode
